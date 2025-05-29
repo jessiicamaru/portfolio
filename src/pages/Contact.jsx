@@ -13,8 +13,8 @@ const Contact = () => {
 
     return (
         <DefaultLayout>
-            <div className="w-full screen">
-                <div className="w-full h-[calc(100vh-60px)] max-w-4xl flex items-center justify-center mx-auto py-16 px-4">
+            <div className="w-full min-h-screen flex items-center">
+                <div className="w-full h-[calc(100vh-60px)] max-sm:h-auto max-w-4xl flex items-center justify-center mx-auto py-16 px-4">
                     <AnimatePresence mode="wait">
                         {!showContact ? (
                             <div className="min-w-80 max-w-[500px] relative">

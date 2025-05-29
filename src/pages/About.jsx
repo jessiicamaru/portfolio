@@ -15,7 +15,7 @@ const About = () => {
                 viewport={{ once: true }}
                 className="w-full"
             >
-                <div className="w-full h-screen py-16 px-4">
+                <div className="w-full h-screen max-sm:h-auto py-16 px-4">
                     <div className="w-full absolute left-0 top-0">
                         <Lanyard position={[0, 0, 15]} />
                     </div>

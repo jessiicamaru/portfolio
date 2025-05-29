@@ -126,7 +126,7 @@ const Home = () => {
                     <div>
                         <div className="w-full text-4xl text-center font-semibold">Personal skills</div>
                         <div className="w-full flex items-center justify-center">
-                            <div className="w-2xl h-52 flex flex-wrap items-center justify-center max-[768px]:w-full max-sm:h-full max-sm:gap-y-2">
+                            <div className="mt-8 w-2xl h-52 flex flex-wrap items-center justify-center max-[768px]:w-full max-sm:h-full max-sm:gap-y-2">
                                 {personalSkills.map((item) => (
                                     <motion.div
                                         initial={{ opacity: 0, y: 20 }}
