@@ -150,7 +150,7 @@ const Contact = () => {
                                                         jessiicamaru
                                                     </a>
                                                     <img
-                                                        src="https://img.icons8.com/?size=100&id=8808&format=png&color=000000"
+                                                        src="https://img.icons8.com/?size=100&id=62856&format=png&color=000000"
                                                         alt=""
                                                         className="w-6 p-1"
                                                     />
@@ -165,7 +165,7 @@ const Contact = () => {
                                                         Dũng Hoàng
                                                     </a>
                                                     <img
-                                                        src="https://img.icons8.com/?size=100&id=667idArLy8ci&format=png&color=000000"
+                                                        src="https://img.icons8.com/?size=100&id=8808&format=png&color=000000"
                                                         alt=""
                                                         className="w-6 p-1"
                                                     />
