@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DefaultLayout from '../layout/DefaultLayout';
 import SpotlightCard from '../component/SpotlightCard/SpotlightCard';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Contact = () => {

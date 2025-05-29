@@ -78,8 +78,8 @@ const Home = () => {
 
     return (
         <DefaultLayout>
-            <div className="w-full">
-                <div className="w-full h-[calc(100vh-60px)] py-16 px-4">
+            <div className="w-full ">
+                <div className="w-full h-[calc(100vh-60px)] max-sm:h-full py-16 px-4">
                     <div className="w-full absolute left-0 top-0">
                         <Lanyard position={[0, 0, 15]} />
                     </div>
@@ -121,12 +121,12 @@ const Home = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
-                    className="w-full h-[calc(100vh-180px)] max-[600px]:w-full  max-[600px]:!px-0 py-16 flex items-center justify-center"
+                    className="w-full h-[calc(100vh-180px)] max-sm:h-full max-[600px]:w-full  max-[600px]:!px-0 py-16 flex items-center justify-center"
                 >
                     <div>
                         <div className="w-full text-4xl text-center font-semibold">Personal skills</div>
                         <div className="w-full flex items-center justify-center">
-                            <div className="w-2xl h-52 flex flex-wrap items-center justify-center max-[768px]:w-full">
+                            <div className="w-2xl h-52 flex flex-wrap items-center justify-center max-[768px]:w-full max-sm:h-full max-sm:gap-y-2">
                                 {personalSkills.map((item) => (
                                     <motion.div
                                         initial={{ opacity: 0, y: 20 }}
@@ -167,13 +167,13 @@ const Home = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
-                    className="w-full h-[calc(100vh-120px)] py-16 flex items-center justify-center"
+                    className="w-full h-[calc(100vh-120px)] max-sm:h-full py-16 flex items-center justify-center"
                 >
-                    <div>
+                    <div className=" max-sm:px-2 max-sm:text-sm max-sm:w-full">
                         <div className="w-full text-4xl text-center font-semibold">Achievements</div>
-                        <div>
+                        <div className="w-full">
                             <div className="w-full text-2xl my-8 text-center">Second prize of Best Web Design - BWD competition</div>
-                            <div className="w-full flex justify-center max-[900px]:flex-wrap max-[900px]:gap-3">
+                            <div className="w-full flex justify-center max-[900px]:flex-wrap max-[900px]:gap-3  max-sm:px-2">
                                 <motion.img
                                     src="/second_prize.jpg"
                                     alt="Second Prize"
@@ -181,7 +181,7 @@ const Home = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5 }}
                                     viewport={{ once: true }}
-                                    className="max-w-md mx-3 rounded-lg shadow-lg"
+                                    className="max-w-md mx-3 rounded-lg shadow-lg  max-sm:w-full"
                                 />
                                 <motion.img
                                     src="/all_student.jpg"
@@ -190,7 +190,7 @@ const Home = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5 }}
                                     viewport={{ once: true }}
-                                    className="max-w-md mx-3 rounded-lg shadow-lg"
+                                    className="max-w-md mx-3 rounded-lg shadow-lg max-sm:w-full"
                                 />
                             </div>
                         </div>

@@ -14,6 +14,7 @@ const DefaultLayout = ({ children }) => {
     });
 
     const [isScrolled, setIsScrolled] = useState(false);
+    const [dropMenu, setDropMenu] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -36,12 +37,28 @@ const DefaultLayout = ({ children }) => {
                         'bg-transparent': !isScrolled,
                     })}
                 >
-                    <div className="w-full flex pt-[10px] pb-[2px] z-10 items-center">
+                    <div className="w-full flex pt-[10px] pb-[2px] z-10 items-center max-sm:justify-between max-sm:relative">
                         <div className="px-4 py-2 cursor-pointer font-bold text-2xl">dzxje.</div>
-                        <ul className="inline-block max-[600px]:flex">
+                        <div
+                            className="w-9 mr-2 max-sm:block hidden"
+                            onClick={() => {
+                                setDropMenu(!dropMenu);
+                            }}
+                        >
+                            <img src="https://img.icons8.com/?size=100&id=8800&format=png&color=000000" alt="" className="px-2" />
+                        </div>
+
+                        <ul
+                            className={clsx(
+                                'inline-block max-[600px]:flex max-sm:absolute max-sm:top-[100%] max-sm:flex-col max-sm:right-0 max-sm:bg-white max-sm:px-4',
+                                {
+                                    'max-sm:hidden': !dropMenu,
+                                }
+                            )}
+                        >
                             <li
                                 className={clsx(
-                                    'inline-block max-[600px]:px-2 max-[600px]:w-1/4 h-full px-4 py-2 cursor-pointer font-[500] border-b-[2px] border-b-transparent relative hover:border-b-[black] border-solid ',
+                                    'max-sm:w-full max-sm:text-center inline-block max-[600px]:px-2 max-[600px]:w-1/4 h-full px-4 py-2 cursor-pointer font-[500] border-b-[2px] border-b-transparent relative hover:border-b-[black] border-solid ',
                                     {
                                         '!border-b-[black]': itemKey === 1,
                                     }
@@ -52,7 +69,7 @@ const DefaultLayout = ({ children }) => {
                             </li>
                             <li
                                 className={clsx(
-                                    'inline-block max-[600px]:w-1/4 max-[600px]:px-2 px-4 py-2 cursor-pointer font-[500] border-b-[2px] border-b-transparent hover:border-b-[black] border-solid relative',
+                                    'max-sm:w-full max-sm:text-center inline-block max-[600px]:w-1/4 max-[600px]:px-2 px-4 py-2 cursor-pointer font-[500] border-b-[2px] border-b-transparent hover:border-b-[black] border-solid relative',
                                     {
                                         '!border-b-[black]': itemKey === 2,
                                     }
@@ -63,7 +80,7 @@ const DefaultLayout = ({ children }) => {
                             </li>
                             <li
                                 className={clsx(
-                                    'inline-block max-[600px]:w-1/4 max-[600px]:px-2 px-4 py-2 cursor-pointer font-[500] border-b-[2px] border-b-transparent hover:border-b-[black] border-solid relative',
+                                    'max-sm:w-full max-sm:text-center inline-block max-[600px]:w-1/4 max-[600px]:px-2 px-4 py-2 cursor-pointer font-[500] border-b-[2px] border-b-transparent hover:border-b-[black] border-solid relative',
                                     {
                                         '!border-b-[black]': itemKey === 3,
                                     }
@@ -74,7 +91,7 @@ const DefaultLayout = ({ children }) => {
                             </li>
                             <li
                                 className={clsx(
-                                    'inline-block max-[600px]:w-1/4 max-[600px]:px-2 px-4 py-2 cursor-pointer font-[500] border-b-[2px] border-b-transparent hover:border-b-[black] border-solid relative',
+                                    'max-sm:w-full max-sm:text-center inline-block max-[600px]:w-1/4 max-[600px]:px-2 px-4 py-2 cursor-pointer font-[500] border-b-[2px] border-b-transparent hover:border-b-[black] border-solid relative',
                                     {
                                         '!border-b-[black]': itemKey === 4,
                                     }

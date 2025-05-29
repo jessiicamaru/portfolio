@@ -144,7 +144,7 @@ const Project = () => {
                     <div className="flex items-center flex-wrap justify-center px-2">
                         {projects.map((project, index) => {
                             return (
-                                <div className="w-1/2" key={project + index}>
+                                <div className="w-1/2 max-md:w-full " key={project + index}>
                                     <ProjectItem key={index} project={project} />
                                 </div>
                             );
