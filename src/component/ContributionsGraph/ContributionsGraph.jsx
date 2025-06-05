@@ -92,7 +92,7 @@ const ContributionsGraph = () => {
     };
 
     return (
-        <div className="w-full max-sm:w-screen overflow-hidden bg-white p-4 rounded-lg shadow-md hover:shadow-lg max-[768px]:px-2">
+        <div className="w-full max-sm:w-full overflow-hidden bg-white p-4  shadow-md hover:shadow-lg ">
             <div className={`${styles.graphContributionContainer} max-sm:overflow-x-scroll`}>
                 <div className="flex max-sm:w-[776px] justify-between items-center mb-2">
                     <div className="text-2xl">{totalContributions} contributions in the last year</div>

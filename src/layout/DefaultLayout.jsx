@@ -38,9 +38,11 @@ const DefaultLayout = ({ children }) => {
                     })}
                 >
                     <div className="w-full flex pt-[10px] pb-[2px] z-10 items-center max-sm:justify-between max-sm:relative">
-                        <div className="px-4 py-2 cursor-pointer font-bold text-2xl">dzxje.</div>
+                        <div className="px-4 py-2 cursor-pointer font-bold text-2xl">
+                            <a href="/">dzxje.</a>
+                        </div>
                         <div
-                            className="w-9 mr-2 max-sm:block hidden"
+                            className="w-9 mr-2 max-sm:block hidden cursor-pointer"
                             onClick={() => {
                                 setDropMenu(!dropMenu);
                             }}
@@ -50,8 +52,10 @@ const DefaultLayout = ({ children }) => {
 
                         <ul
                             className={clsx(
-                                'inline-block max-[600px]:flex max-sm:absolute max-sm:top-[100%] max-sm:flex-col max-sm:right-0 max-sm:bg-white max-sm:px-4',
+                                'inline-block max-[600px]:flex max-sm:absolute max-sm:top-[100%] max-sm:flex-col max-sm:right-0 max-sm:px-4 pb-4',
                                 {
+                                    'max-sm:bg-white': isScrolled,
+                                    'max-sm:bg-transparent': !isScrolled,
                                     'max-sm:hidden': !dropMenu,
                                 }
                             )}

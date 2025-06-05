@@ -151,12 +151,12 @@ const Project = () => {
                         })}
                     </div>
 
-                    <div className="flex items-center flex-wrap justify-center mt-4">
+                    <div className="overflow-hidden flex items-center flex-wrap justify-center mt-4 max-[768px]:px-3">
                         <motion.div
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
-                            className="text-4xl font-bold text-center mb-8"
+                            className="rounded-lg text-4xl font-bold text-center mb-8 max-[768px]:w-full max-[768px]:overflow-hidden"
                         >
                             <ApolloProvider client={client}>
                                 <ContributionsGraph />
