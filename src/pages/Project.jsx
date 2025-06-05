@@ -152,7 +152,7 @@ const Project = () => {
                     </div>
 
                     <div className="flex items-center flex-wrap justify-center mt-4">
-                        <motion.h2
+                        <motion.div
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
@@ -161,7 +161,7 @@ const Project = () => {
                             <ApolloProvider client={client}>
                                 <ContributionsGraph />
                             </ApolloProvider>
-                        </motion.h2>
+                        </motion.div>
                     </div>
                 </div>
             </div>

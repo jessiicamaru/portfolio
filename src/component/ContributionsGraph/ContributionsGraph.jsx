@@ -2,6 +2,7 @@ import React, { memo, useMemo } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import client from '../../utils/ApolloClient';
 import ReactLoading from 'react-loading';
+import styles from './style.module.css';
 
 const GET_CONTRIBUTIONS = gql`
     query GetContributions($username: String!, $from: DateTime!, $to: DateTime!) {
@@ -23,20 +24,26 @@ const GET_CONTRIBUTIONS = gql`
 `;
 
 const ContributionsGraph = () => {
-    // Tự động lấy ngày hiện tại và chuyển sang UTC, sử dụng useMemo để tránh tính toán lại
-    const today = useMemo(() => new Date(), []); // Chỉ tính một lần khi component mount
+    const today = useMemo(() => new Date(), []);
     const utcToday = useMemo(() => new Date(today.toISOString().split('.')[0] + 'Z'), [today]);
+
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const indexDay = utcToday.getUTCDay();
+    const dayOfWeek = dayNames[indexDay];
+    console.log('Current day of the week:', {
+        indexDay,
+        dayOfWeek,
+    });
 
     const fromDate = useMemo(() => {
         const from = new Date(utcToday);
-        from.setDate(utcToday.getUTCDate() - 371); // 364 ngày trước
+        from.setDate(utcToday.getUTCDate() - 364 - (indexDay + 1));
         return from;
-    }, [utcToday]);
+    }, [utcToday, indexDay]);
 
-    // Tạo mảng tháng từ tháng này năm ngoái đến tháng hiện tại, sử dụng useMemo
     const months = useMemo(() => {
-        const currentMonthIndex = utcToday.getUTCMonth(); // 4 (tháng 5, 0-based)
-        const startMonthIndex = (currentMonthIndex + 1) % 12; // Tháng 5 năm ngoái (5)
+        const currentMonthIndex = utcToday.getUTCMonth();
+        const startMonthIndex = (currentMonthIndex + 1) % 12;
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const monthsArray = [];
         for (let i = 0; i <= 12; i++) {
@@ -49,7 +56,6 @@ const ContributionsGraph = () => {
         return monthsArray;
     }, [utcToday]);
 
-    // Định dạng ngày theo chuẩn ISO 8601 UTC cho GraphQL
     const from = useMemo(() => fromDate.toISOString().split('.')[0] + 'Z', [fromDate]);
     const to = useMemo(() => utcToday.toISOString().split('.')[0] + 'Z', [utcToday]);
 
@@ -60,9 +66,7 @@ const ContributionsGraph = () => {
             to,
         },
         client,
-        fetchPolicy: 'cache-first', // Sử dụng cache để tránh request lặp
-        // Thêm skip nếu không muốn chạy query ngay lập tức (tùy chọn)
-        // skip: !username || !from || !to,
+        fetchPolicy: 'cache-first',
     });
 
     if (loading)
@@ -75,7 +79,6 @@ const ContributionsGraph = () => {
 
     const { contributionCalendar } = data.user.contributionsCollection;
     const days = contributionCalendar.weeks.flatMap((week) => week.contributionDays);
-
     const totalContributions = contributionCalendar.totalContributions;
 
     console.log(data);
@@ -89,79 +92,69 @@ const ContributionsGraph = () => {
     };
 
     return (
-        <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg max-[768px]:px-2 max-[768px]:w-full">
-            <div className="flex justify-between items-center mb-2">
-                <div className="text-2xl">{totalContributions} contributions in the last year</div>
-            </div>
-            <div className="flex">
-                <div className="flex flex-col mr-2 items-center justify-evenly">
-                    {['', 'Mon', '', 'Wed', '', 'Fri', ''].map((day, index) => (
-                        <div key={`label-${index}`} className="text-xs text-gray-400 mt-1 ">
-                            {day}
-                        </div>
-                    ))}
+        <div className="w-full max-sm:w-screen overflow-hidden bg-white p-4 rounded-lg shadow-md hover:shadow-lg max-[768px]:px-2">
+            <div className={`${styles.graphContributionContainer} max-sm:overflow-x-scroll`}>
+                <div className="flex max-sm:w-[776px] justify-between items-center mb-2">
+                    <div className="text-2xl">{totalContributions} contributions in the last year</div>
                 </div>
-                <div className="grid grid-cols-53 gap-y-0.5" style={{ gridTemplateRows: 'repeat(7, 10px)' }}>
-                    {Array.from({ length: 53 }, (_, weekIndex) =>
-                        Array.from({ length: 7 }, (_, dayIndex) => {
-                            const dayData = days.find((d) => {
-                                const date = new Date(d.date);
-                                const startDate = new Date(from);
-                                return date.getDay() === dayIndex && Math.floor((date - startDate) / (1000 * 60 * 60 * 24) / 7) === weekIndex;
-                            });
-                            const count = dayData ? dayData.contributionCount : 0;
-                            const color = dayData ? dayData.color || getColorLevel(count) : getColorLevel(0);
+                <div className="flex max-sm:w-[776px]">
+                    <div className="flex flex-col mr-2 items-center justify-evenly">
+                        {['', 'Mon', '', 'Wed', '', 'Fri', ''].map((day, index) => (
+                            <div key={`label-${index}`} className="text-xs text-gray-400 mt-1">
+                                {day}
+                            </div>
+                        ))}
+                    </div>
+                    <div
+                        className="flex-1 max-sm:w-[742px] grid grid-cols-53 gap-y-0.5 max-sm:overflow-x-auto"
+                        style={{ gridTemplateRows: 'repeat(7, 10px)' }}
+                    >
+                        {Array.from({ length: 53 }, (_, weekIndex) =>
+                            Array.from({ length: 7 }, (_, dayIndex) => {
+                                const dayData = days.find((d) => {
+                                    const date = new Date(d.date);
+                                    const startDate = new Date(from);
+                                    return date.getDay() === dayIndex && Math.floor((date - startDate) / (1000 * 60 * 60 * 24) / 7) === weekIndex;
+                                });
+                                const count = dayData ? dayData.contributionCount : 0;
+                                const color = dayData ? dayData.color || getColorLevel(count) : getColorLevel(0);
 
-                            if (!dayData) {
+                                if (!dayData) {
+                                    return (
+                                        <div
+                                            key={`${weekIndex}-${dayIndex}`}
+                                            className="min-w-[8px]"
+                                            style={{
+                                                gridColumn: weekIndex + 1,
+                                                gridRow: dayIndex + 1,
+                                                backgroundColor: '#fff',
+                                            }}
+                                            title=""
+                                        />
+                                    );
+                                }
+
                                 return (
                                     <div
                                         key={`${weekIndex}-${dayIndex}`}
-                                        className="bg-white"
+                                        className="w-2.5 h-2.5 rounded-sm mx-0.5 border-[0.5px] border-[#ccc]"
                                         style={{
                                             gridColumn: weekIndex + 1,
-                                            gridRow: dayIndex + 1,
-                                            backgroundColor: '#fff',
-                                        }}
-                                        title={''}
-                                    />
-                                );
-                            }
-
-                            if (dayIndex == 6) {
-                                return (
-                                    <div
-                                        key={`${weekIndex}-${dayIndex}`}
-                                        className="w-2.5 h-2.5 rounded-sm col-start-auto mx-0.5 border-[0.5px] border-[#ccc]"
-                                        style={{
-                                            gridColumn: weekIndex,
                                             gridRow: dayIndex + 1,
                                             backgroundColor: color,
                                         }}
                                         title={`${dayData ? dayData.date : ''}: ${count} contributions`}
                                     />
                                 );
-                            }
-
-                            return (
-                                <div
-                                    key={`${weekIndex}-${dayIndex}`}
-                                    className="w-2.5 h-2.5 rounded-sm col-start-auto mx-0.5 border-[0.5px] border-[#ccc]"
-                                    style={{
-                                        gridColumn: weekIndex + 1,
-                                        gridRow: dayIndex + 1,
-                                        backgroundColor: color,
-                                    }}
-                                    title={`${dayData ? dayData.date : ''}: ${count} contributions`}
-                                />
-                            );
-                        })
-                    )}
+                            })
+                        )}
+                    </div>
                 </div>
-            </div>
-            <div className="flex ml-4 justify-between text-xs text-gray-400 mt-2">
-                {months.map((month, index) => (
-                    <span key={index}>{month}</span>
-                ))}
+                <div className="flex ml-4 justify-between text-xs text-gray-400 mt-2 max-sm:w-[776px]">
+                    {months.map((month, index) => (
+                        <span key={index}>{month}</span>
+                    ))}
+                </div>
             </div>
         </div>
     );
