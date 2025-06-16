@@ -37,7 +37,8 @@ const ContributionsGraph = () => {
 
     const fromDate = useMemo(() => {
         const from = new Date(utcToday);
-        from.setDate(utcToday.getUTCDate() - 364 - (indexDay + 1));
+        //357 / 7 = 51
+        from.setDate(utcToday.getUTCDate() - 357 - (indexDay + 1));
         return from;
     }, [utcToday, indexDay]);
 
